@@ -19,7 +19,7 @@ private:
     QCheckBox *m_initNa, *m_initNq;
     QCheckBox *m_alpha, *m_p, *m_beta;
     QCheckBox *m_GammaA, *m_GammaQ;
-    QPushButton *m_back, *m_start;
+    QPushButton *m_back, *m_cancel, *m_start;
     QProgressBar *m_progress;
 
 private slots:

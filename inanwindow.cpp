@@ -17,6 +17,7 @@ InAnWindow::InAnWindow() : QWidget(){
     m_GammaA = new QCheckBox("Death rate of active cells", m_param);
     m_GammaQ = new QCheckBox("Death rate of quiescent cells", m_param);
     m_back = new QPushButton("Back", this);
+    m_cancel = new QPushButton("Cancel", this);
     m_start = new QPushButton("Start analysis", this);
     m_progress = new QProgressBar(this);
 
@@ -41,6 +42,7 @@ InAnWindow::InAnWindow() : QWidget(){
 
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(m_back);
+    hLayout->addWidget(m_cancel);
     hLayout->addWidget(m_start);
 
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -54,6 +56,7 @@ InAnWindow::InAnWindow() : QWidget(){
     setWindowTitle("Tumor Growth Simulator");
 
     QObject::connect(m_back, SIGNAL(clicked()), this, SLOT(back()));
+    QObject::connect(m_cancel, SIGNAL(clicked()), qApp, SLOT(quit()));
     QObject::connect(m_start, SIGNAL(clicked()), this, SLOT(start()));
 }
 
