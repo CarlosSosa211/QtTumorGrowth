@@ -4,7 +4,8 @@ SOURCES += \
     tissue.cpp \
     inwindow.cpp \
     outwindow.cpp \
-    startwindow.cpp
+    startwindow.cpp \
+    inanwindow.cpp
 
 QT += \
     widgets
@@ -14,6 +15,7 @@ HEADERS += \
     tissue.hpp \
     inwindow.h \
     outwindow.h \
-    startwindow.h
+    startwindow.h \
+    inanwindow.h
 
 FORMS +=

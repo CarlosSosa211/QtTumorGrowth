@@ -2,13 +2,13 @@
 #define STARTWINDOW_H
 
 #include <QApplication>
-#include <QLabel>
-#include <QGroupBox>
-#include <QRadioButton>
-#include <QPushButton>
-#include <QWidget>
-#include <QStyle>
 #include <QDesktopWidget>
+#include <QGroupBox>
+#include <QLabel>
+#include <QPushButton>
+#include <QRadioButton>
+#include <QStyle>
+#include <QWidget>
 
 class StartWindow : public QWidget{
     Q_OBJECT

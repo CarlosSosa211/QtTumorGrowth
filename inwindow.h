@@ -2,21 +2,21 @@
 #define INWINDOW_H
 
 #include <QApplication>
-#include <QLabel>
-#include <QSpinBox>
-#include <QDoubleSpinBox>
-#include <QGroupBox>
-#include <QMessageBox>
-#include <QPushButton>
-#include <QProgressBar>
-#include <QFileDialog>
-#include <QWidget>
-#include <QStyle>
 #include <QDesktopWidget>
+#include <QDoubleSpinBox>
+#include <QFileDialog>
+#include <QGroupBox>
+#include <QLabel>
+#include <QMessageBox>
+#include <QProgressBar>
+#include <QPushButton>
+#include <QSpinBox>
+#include <QStyle>
+#include <QWidget>
 
-#include "tissue.hpp"
 #include "outwindow.h"
 #include "startwindow.h"
+#include "tissue.hpp"
 
 class InWindow : public QWidget{
     Q_OBJECT

@@ -66,7 +66,7 @@ InWindow::InWindow() : QWidget(){
 
     setLayout(mainLayout);
 
-    setWindowTitle("Tumor Growth");
+    setWindowTitle("Tumor Growth Simulator");
     /*setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
                                     qApp->desktop()->availableGeometry()));*/
 

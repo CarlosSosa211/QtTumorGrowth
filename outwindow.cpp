@@ -31,7 +31,7 @@ OutWindow::OutWindow(int finN, int finNa, int finNq) : QWidget(){
     layout->addLayout(hLayout);
     setLayout(layout);
 
-    setWindowTitle("Tumor Growth");
+    setWindowTitle("Tumor Growth Simulator");
     /*setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
                                     qApp->desktop()->availableGeometry()));*/
 

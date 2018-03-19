@@ -1,10 +1,11 @@
 #include <QVBoxLayout>
 
-#include "startwindow.h"
+#include "inanwindow.h"
 #include "inwindow.h"
+#include "startwindow.h"
 
 StartWindow::StartWindow() : QWidget(){
-    m_title = new QLabel("Tumor Growth");
+    m_title = new QLabel("Tumor Growth Simulator");
     m_sel = new QGroupBox("Select mode", this);
     m_fixedVal = new QRadioButton("Simulation with fixed values");
     m_sensAn = new QRadioButton("Sensitivity analysis");
@@ -25,7 +26,7 @@ StartWindow::StartWindow() : QWidget(){
     mainLayout->addWidget(m_ok);
     setLayout(mainLayout);
 
-    setWindowTitle("Tumor Growth");
+    setWindowTitle("Tumor Growth Simulator");
     /*setGeometry(QStyle::alignedRect(Qt::LeftToRight, Qt::AlignCenter, size(),
                                     qApp->desktop()->availableGeometry()));*/
 
@@ -36,6 +37,11 @@ void StartWindow::advance(){
     if(m_fixedVal->isChecked()){
         InWindow *inWindow = new InWindow;
         inWindow->show();
+        close();
+    }
+    if(m_sensAn->isChecked()){
+        InAnWindow *inAnWindow = new InAnWindow;
+        inAnWindow->show();
         close();
     }
 }

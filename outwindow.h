@@ -2,14 +2,14 @@
 #define OUTWINDOW_H
 
 #include <QApplication>
+#include <QDesktopWidget>
 #include <QLabel>
-#include <QWidget>
 #include <QPushButton>
 #include <QStyle>
-#include <QDesktopWidget>
+#include <QWidget>
 
-#include "startwindow.h"
 #include "inwindow.h"
+#include "startwindow.h"
 
 class OutWindow : public QWidget{
     Q_OBJECT
