@@ -1,3 +1,4 @@
+#include <QGridLayout>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 
@@ -7,7 +8,7 @@
 InAnWindow::InAnWindow() : QWidget(){
     m_sel = new QGroupBox("Select a method", this);
     m_method = new QComboBox(m_sel);
-    m_param = new QGroupBox("Select the inputs and parameters to be analyzed",
+    m_param = new QGroupBox("Select the inputs and parameters to be analyzed and enter the value of the non-selected factors",
                             this);
     m_initNa = new QCheckBox("Initial number of active cells", m_param);
     m_initNq = new QCheckBox("Initial number of quiescent cells", m_param);
@@ -16,6 +17,13 @@ InAnWindow::InAnWindow() : QWidget(){
     m_beta = new QCheckBox("Quiescent to active rate", m_param);
     m_GammaA = new QCheckBox("Death rate of active cells", m_param);
     m_GammaQ = new QCheckBox("Death rate of quiescent cells", m_param);
+    m_initNaS = new QSpinBox(m_param);
+    m_initNqS = new QSpinBox(m_param);
+    m_alphaS = new QDoubleSpinBox(m_param);
+    m_pS = new QDoubleSpinBox(m_param);
+    m_betaS = new QDoubleSpinBox(m_param);
+    m_GammaAS = new QDoubleSpinBox(m_param);
+    m_GammaQS = new QDoubleSpinBox(m_param);
     m_back = new QPushButton("Back", this);
     m_cancel = new QPushButton("Cancel", this);
     m_start = new QPushButton("Start analysis", this);
@@ -23,22 +31,40 @@ InAnWindow::InAnWindow() : QWidget(){
 
     m_method->addItem("Sobol");
     m_method->addItem("FAST");
+    m_initNaS->setMaximum(9999);
+    m_initNqS->setMaximum(9999);
+    m_alphaS->setMaximum(1.0);
+    m_alphaS->setSingleStep(0.01);
+    m_pS->setMaximum(1.0);
+    m_pS->setSingleStep(0.01);
+    m_betaS->setMaximum(1.0);
+    m_betaS->setSingleStep(0.01);
+    m_GammaAS->setMaximum(1.0);
+    m_GammaAS->setSingleStep(0.01);
+    m_GammaQS->setMaximum(1.0);
+    m_GammaQS->setSingleStep(0.01);
     m_progress->setMinimum(0);
 
     QVBoxLayout *boxLayout = new QVBoxLayout;
     boxLayout->addWidget(m_method);
     m_sel->setLayout(boxLayout);
 
-    QVBoxLayout *box2Layout = new QVBoxLayout;
-    box2Layout->addWidget(m_initNa);
-    box2Layout->addWidget(m_initNq);
-    box2Layout->addWidget(m_alpha);
-    box2Layout->addWidget(m_p);
-    box2Layout->addWidget(m_beta);
-
-    box2Layout->addWidget(m_GammaA);
-    box2Layout->addWidget(m_GammaQ);
-    m_param->setLayout(box2Layout);
+    QGridLayout *gridLayout = new QGridLayout;
+    gridLayout->addWidget(m_initNa, 0, 0);
+    gridLayout->addWidget(m_initNaS, 0, 1);
+    gridLayout->addWidget(m_initNq, 1, 0);
+    gridLayout->addWidget(m_initNqS, 1, 1);
+    gridLayout->addWidget(m_alpha, 2, 0);
+    gridLayout->addWidget(m_alphaS, 2, 1);
+    gridLayout->addWidget(m_p, 3, 0);
+    gridLayout->addWidget(m_pS, 3, 1);
+    gridLayout->addWidget(m_beta, 4, 0);
+    gridLayout->addWidget(m_betaS, 4, 1);
+    gridLayout->addWidget(m_GammaA, 5, 0);
+    gridLayout->addWidget(m_GammaAS, 5, 1);
+    gridLayout->addWidget(m_GammaQ, 6, 0);
+    gridLayout->addWidget(m_GammaQS, 6, 1);
+    m_param->setLayout(gridLayout);
 
     QHBoxLayout *hLayout = new QHBoxLayout;
     hLayout->addWidget(m_back);
@@ -54,10 +80,18 @@ InAnWindow::InAnWindow() : QWidget(){
     setLayout(mainLayout);
 
     setWindowTitle("Tumor Growth Simulator");
+    setWindowIcon(QIcon("logo.png"));
 
     QObject::connect(m_back, SIGNAL(clicked()), this, SLOT(back()));
     QObject::connect(m_cancel, SIGNAL(clicked()), qApp, SLOT(quit()));
     QObject::connect(m_start, SIGNAL(clicked()), this, SLOT(start()));
+    QObject::connect(m_initNa, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_initNq, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_alpha, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_p, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_beta, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_GammaA, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
+    QObject::connect(m_GammaQ, SIGNAL(stateChanged(int)), this, SLOT(disable(int)));
 }
 
 
@@ -68,7 +102,17 @@ void InAnWindow::back(){
 }
 
 
-void InAnWindow::start(){
+void InAnWindow::disable(int state){
+    m_initNaS->setEnabled(!m_initNa->isChecked());
+    m_initNqS->setEnabled(!m_initNq->isChecked());
+    m_alphaS->setEnabled(!m_alpha->isChecked());
+    m_pS->setEnabled(!m_p->isChecked());
+    m_betaS->setEnabled(!m_beta->isChecked());
+    m_GammaAS->setEnabled(!m_GammaA->isChecked());
+    m_GammaQS->setEnabled(!m_GammaQ->isChecked());
+}
 
+
+void InAnWindow::start(){
 }
 

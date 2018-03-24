@@ -14,6 +14,8 @@
 #include <QStyle>
 #include <QWidget>
 
+#include <vector>
+
 #include "outwindow.h"
 #include "startwindow.h"
 #include "tissue.hpp"
@@ -21,8 +23,12 @@
 class InWindow : public QWidget{
     Q_OBJECT
 public:
-    InWindow();
+    InWindow(int initNa = 0, int initNq = 0, double p = 0.0,
+             double alpha = 0.0, double beta = 0.0, double GammaA = 0.0,
+             double GammaQ = 0.0, int nIter = 1);
 
+public slots:
+    void simulate();
 private:
     QGroupBox *m_param;
     QSpinBox *m_initNa, *m_initNq, *m_nIter;
@@ -34,7 +40,6 @@ private:
 
 private slots:
     void back();
-    void simulate();
     void loadInData();
 };
 
