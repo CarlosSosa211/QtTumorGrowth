@@ -4,7 +4,7 @@
 #include "inwindow.h"
 #include "startwindow.h"
 
-StartWindow::StartWindow() : QWidget(){
+StartWindow::StartWindow(RInside &R) : QWidget(), m_R(R){
     m_title = new QLabel;
     m_sel = new QGroupBox("Select mode", this);
     m_fixedVal = new QRadioButton("Simulation with fixed values", m_sel);
@@ -37,12 +37,12 @@ StartWindow::StartWindow() : QWidget(){
 
 void StartWindow::advance(){
     if(m_fixedVal->isChecked()){
-        InWindow *inWindow = new InWindow;
+        InWindow *inWindow = new InWindow(m_R);
         inWindow->show();
         close();
     }
     if(m_sensAn->isChecked()){
-        InAnWindow *inAnWindow = new InAnWindow;
+        InAnWindow *inAnWindow = new InAnWindow(m_R);
         inAnWindow->show();
         close();
     }

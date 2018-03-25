@@ -10,8 +10,8 @@
 
 #include "inwindow.h"
 
-InWindow::InWindow(int initNa, int initNq, double p, double alpha, double beta,
-                   double GammaA, double GammaQ, int nIter) : QWidget(){
+InWindow::InWindow(RInside &R, int initNa, int initNq, double p, double alpha, double beta,
+                   double GammaA, double GammaQ, int nIter) : QWidget(), m_R(R){
     m_param = new QGroupBox("Enter the value of the parameters", this);
     m_initNa = new QSpinBox(m_param);
     m_initNq = new QSpinBox(m_param);
@@ -92,7 +92,7 @@ InWindow::InWindow(int initNa, int initNq, double p, double alpha, double beta,
 
 
 void InWindow::back(){
-    StartWindow *startWindow = new StartWindow;
+    StartWindow *startWindow = new StartWindow(m_R);
     close();
     startWindow->show();
 }
@@ -151,7 +151,7 @@ void InWindow::simulate(){
     m_progress->setValue(k);
     stream.close();
 
-    OutWindow *outWindow = new OutWindow(Na, Nq, m_p->value(), m_alpha->value(), m_beta->value(),
+    OutWindow *outWindow = new OutWindow(m_R, Na, Nq, m_p->value(), m_alpha->value(), m_beta->value(),
                                          m_GammaA->value(), m_GammaQ->value());
     close();
     outWindow->show();

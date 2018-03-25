@@ -1,6 +1,8 @@
 #ifndef INANWINDOW_H
 #define INANWINDOW_H
 
+#include<string>
+
 #include <QCheckBox>
 #include <QComboBox>
 #include <QDoubleSpinBox>
@@ -10,12 +12,15 @@
 #include <QSpinBox>
 #include <QWidget>
 
+#include "startwindow.h"
+
 class InAnWindow : public QWidget{
     Q_OBJECT
 public:
-    InAnWindow();
+    InAnWindow(RInside &R);
 
 private:
+    RInside &m_R;
     QComboBox *m_method;
     QGroupBox *m_param, *m_sel;
     QCheckBox *m_initNa, *m_initNq;

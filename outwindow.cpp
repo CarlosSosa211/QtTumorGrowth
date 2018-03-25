@@ -3,8 +3,8 @@
 
 #include "outwindow.h"
 
-OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double alpha, double beta,
-                     double GammaA, double GammaQ) : QWidget(){
+OutWindow::OutWindow(RInside &R, std::vector<int> Na, std::vector<int> Nq, double p, double alpha, double beta,
+                     double GammaA, double GammaQ) : QWidget(), m_R(R){
     m_initNa = Na.at(0);
     m_initNq = Nq.at(0);
     m_nIter = Na.size() - 1;
@@ -32,9 +32,9 @@ OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double 
     m_save = new QPushButton("Save chart", this);
     m_newSim = new QPushButton("New simulation", this);
 
-    QLineSeries *seriesN = new QLineSeries();
-    QLineSeries *seriesNa = new QLineSeries();
-    QLineSeries *seriesNq = new QLineSeries();
+    QtCharts::QLineSeries *seriesN = new QtCharts::QLineSeries();
+    QtCharts::QLineSeries *seriesNa = new QtCharts::QLineSeries();
+    QtCharts::QLineSeries *seriesNq = new QtCharts::QLineSeries();
     seriesN->setName("Total");
     seriesNa->setName("Active cells");
     seriesNq->setName("Quiescent cells");
@@ -44,13 +44,13 @@ OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double 
         seriesNq->append(i, Nq.at(i));
     }
 
-    QChart *chart = new QChart();
+    QtCharts::QChart *chart = new QtCharts::QChart();
     chart->addSeries(seriesN);
     chart->addSeries(seriesNa);
     chart->addSeries(seriesNq);
     chart->setTitle("Evolution of the number of tumor cells");
 
-    QValueAxis *axisX = new QValueAxis;
+    QtCharts::QValueAxis *axisX = new QtCharts::QValueAxis;
     axisX->setTitleText("Iteration");
     axisX->setLabelFormat("%i");
     axisX->setTickCount(seriesN->count());
@@ -60,7 +60,7 @@ OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double 
     seriesNq->attachAxis(axisX);
     axisX->applyNiceNumbers();
 
-    QValueAxis *axisY = new QValueAxis;
+    QtCharts::QValueAxis *axisY = new QtCharts::QValueAxis;
     axisY->setTitleText("Number of cells");
     axisY->setLabelFormat("%i");
     chart->addAxis(axisY, Qt::AlignLeft);
@@ -70,7 +70,7 @@ OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double 
     axisY->setMin(0.0);
     axisY->applyNiceNumbers();
 
-    m_chartView = new QChartView(chart);
+    m_chartView = new QtCharts::QChartView(chart);
     m_chartView->setRenderHint(QPainter::Antialiasing);
 
     QHBoxLayout *paramLayout = new QHBoxLayout;
@@ -110,14 +110,14 @@ OutWindow::OutWindow(std::vector<int> Na, std::vector<int> Nq, double p, double 
 
 
 void OutWindow::change(){
-    InWindow *inWindow = new InWindow;
+    InWindow *inWindow = new InWindow(m_R);
     close();
     inWindow->show();
 }
 
 
 void OutWindow::newSim(){
-    InWindow *inWindow = new InWindow(m_initNa, m_initNq, m_p, m_alpha,
+    InWindow *inWindow = new InWindow(m_R, m_initNa, m_initNq, m_p, m_alpha,
                                       m_beta, m_GammaA, m_GammaQ, m_nIter);
     inWindow->simulate();
     close();
@@ -125,7 +125,7 @@ void OutWindow::newSim(){
 
 
 void OutWindow::sel(){
-    StartWindow *startWindow = new StartWindow;
+    StartWindow *startWindow = new StartWindow(m_R);
     close();
     startWindow->show();
 }

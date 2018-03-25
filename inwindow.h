@@ -23,13 +23,14 @@
 class InWindow : public QWidget{
     Q_OBJECT
 public:
-    InWindow(int initNa = 0, int initNq = 0, double p = 0.0,
+    InWindow(RInside &m_R, int initNa = 0, int initNq = 0, double p = 0.0,
              double alpha = 0.0, double beta = 0.0, double GammaA = 0.0,
              double GammaQ = 0.0, int nIter = 1);
 
 public slots:
     void simulate();
 private:
+    RInside &m_R;
     QGroupBox *m_param;
     QSpinBox *m_initNa, *m_initNq, *m_nIter;
     QDoubleSpinBox *m_alpha, *m_p, *m_beta;

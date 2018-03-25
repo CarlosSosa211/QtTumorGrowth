@@ -10,12 +10,15 @@
 #include <QStyle>
 #include <QWidget>
 
+#include <RInside.h>
+
 class StartWindow : public QWidget{
     Q_OBJECT
 public:
-    StartWindow();
+    StartWindow(RInside &R);
 
 private:
+    RInside &m_R;
     QLabel *m_title;
     QGroupBox *m_sel;
     QRadioButton *m_fixedVal, *m_sensAn;

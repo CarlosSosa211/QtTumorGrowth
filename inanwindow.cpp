@@ -3,9 +3,9 @@
 #include <QVBoxLayout>
 
 #include "inanwindow.h"
-#include "startwindow.h"
 
-InAnWindow::InAnWindow() : QWidget(){
+InAnWindow::InAnWindow(RInside &R) : QWidget(), m_R(R){
+
     m_sel = new QGroupBox("Select a method", this);
     m_method = new QComboBox(m_sel);
     m_param = new QGroupBox("Select the inputs and parameters to be analyzed and enter the value of the non-selected factors",
@@ -96,7 +96,7 @@ InAnWindow::InAnWindow() : QWidget(){
 
 
 void InAnWindow::back(){
-    StartWindow *startWindow = new StartWindow;
+    StartWindow *startWindow = new StartWindow(m_R);
     close();
     startWindow->show();
 }
@@ -114,5 +114,16 @@ void InAnWindow::disable(int state){
 
 
 void InAnWindow::start(){
+    std::string cmd0 = "library(sensitivity);";
+    std::string cmd1 = "library(boot);";
+    std::string cmd2 = "n <- 1000;";
+    std::string cmd3 = "X1 <- data.frame(matrix(runif(8 * n), nrow = n));";
+    std::string cmd4 = "X2 <- data.frame(matrix(runif(8 * n), nrow = n));";
+    std::string cmd5 = "x <- sobolmartinez(model = sobol.fun, X1, X2, nboot = 0);";
+    std::string cmd6 = "png('test.png');";
+    std::string cmd7 = "plot(x);";
+    std::string cmd8 = "dev.off();";
+    std::string cmd = cmd0 + cmd1 + cmd2 + cmd3 + cmd4 + cmd5 + cmd6 + cmd7 + cmd8;
+    m_R.parseEvalQ(cmd);
 }
 
